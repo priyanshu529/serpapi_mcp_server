@@ -83,5 +83,4 @@ def search_flights_prices(
     }
 
 
-if __name__ == "__main__":
-    mcp.run(transport="stdio")
+mcp.run(transport="streamable_http")
