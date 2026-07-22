@@ -1,6 +1,8 @@
 import os
+from typing import Optional
+
 import requests
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,8 +15,13 @@ BASE_URL = "https://serpapi.com/search"
 
 def _run_search(params: dict) -> dict:
     """Shared call into SerpApi's google_flights engine."""
+    if not SERPAPI_API_KEY:
+        raise RuntimeError(
+            "SERPAPI_API_KEY is not set. Add it as an environment variable "
+            "(locally via .env, or in the FastMCP Cloud project settings)."
+        )
     params = {**params, "engine": "google_flights", "api_key": SERPAPI_API_KEY}
-    resp = requests.get(BASE_URL, params=params)
+    resp = requests.get(BASE_URL, params=params, timeout=30)
     resp.raise_for_status()
     data = resp.json()
     if "error" in data:
@@ -55,8 +62,8 @@ def _simplify_flights(data: dict, limit: int) -> list[dict]:
 def search_flights_prices(
     origin: str,
     destination: str,
-    departure_at: str = None,
-    return_at: str = None,
+    departure_at: Optional[str] = None,
+    return_at: Optional[str] = None,
     one_way: bool = True,
     currency: str = "INR",
     limit: int = 10,
@@ -83,3 +90,7 @@ def search_flights_prices(
     }
 
 
+if __name__ == "__main__":
+    # Ignored by FastMCP Cloud (it imports the `mcp` object directly),
+    # but useful for running the server locally: `python mcp_server.py`
+    mcp.run()
