@@ -129,8 +129,10 @@ def search_flights_prices(
     "outbound_date": departure_at,
     "currency": currency,
     "type": 2 if one_way else 1,
-    "gl": "in",          # Search from India
-    "hl": "en",          # English interface
+    "gl": "in",
+    "hl": "en",
+    "deep_search": "true",
+    "no_cache": "true"
     }
 
     if not one_way and return_at:
