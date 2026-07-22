@@ -1,0 +1,11 @@
+[project]
+name = "travelpayouts-custom"
+version = "0.1.0"
+description = "MCP server for flight search using SerpAPI"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastmcp==3.4.4",
+    "requests",
+    "python-dotenv",
+]
