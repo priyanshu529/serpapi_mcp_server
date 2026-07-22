@@ -91,6 +91,7 @@ def search_flights_prices(
 
 
 if __name__ == "__main__":
-    # Ignored by FastMCP Cloud (it imports the `mcp` object directly),
-    # but useful for running the server locally: `python mcp_server.py`
-    mcp.run()
+    # Runs a real HTTP server with no forced auth layer (unlike Horizon/FastMCP Cloud).
+    # Host platforms like Render/Railway inject the PORT env var; default to 8000 locally.
+    port = int(os.environ.get("PORT", 8000))
+    mcp.run(transport="http", host="0.0.0.0", port=port)
