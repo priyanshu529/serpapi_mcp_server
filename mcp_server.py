@@ -83,4 +83,4 @@ def search_flights_prices(
     }
 
 
-mcp.run(transport="streamable_http")
+mcp.run(transport="streamable-http")
